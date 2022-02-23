@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/Card.cs" />
     <Compile Include="Assets/Scripts/CardDisplay.cs" />
+    <Compile Include="Assets/Scripts/CardStore.cs" />
+    <Compile Include="Assets/Scripts/OpenPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

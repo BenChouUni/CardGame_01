@@ -14,21 +14,21 @@ public class Card
     }
 }
 
-public class MonsterCard : Card
+public class MonsterCard : Card //怪物卡
 {
     public int attack;
     public int healthPoint;
     public int healthPointMax;
 
-    public MonsterCard(int _id,string _cardName,int _attack, int _healthPoint, int _healthPointMax):base(_id, _cardName)
+    public MonsterCard(int _id,string _cardName,int _attack, int _healthPointMax):base(_id, _cardName)
     {
         this.attack = _attack;
-        this.healthPoint = _healthPoint;
+        this.healthPoint = _healthPointMax;
         this.healthPointMax = _healthPointMax;
     }
 }
 
-public class SpellCard : Card
+public class SpellCard : Card //法術卡
 {
     public string effect;
     public SpellCard(int _id, string _cardName,string _effect) : base(_id, _cardName)
