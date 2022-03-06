@@ -1,18 +1,24 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{53029B92-8E94-524D-DDBA-F2CC0F25C1B0}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerData.cs">
     <Files>
-      <File FileName="Assets/Scripts/Card.cs" Line="11" Column="6" />
-      <File FileName="Assets/Scripts/CardDisplay.cs" />
+      <File FileName="Assets/Scripts/CardDisplay.cs" Line="20" Column="20" />
+      <File FileName="Assets/Scripts/Card.cs" Line="40" Column="1" />
       <File FileName="Assets/Scripts/CardStore.cs" />
-      <File FileName="Assets/Data/Cardgame_CardList.csv" />
-      <File FileName="Assets/Scripts/OpenPackage.cs" />
-      <File FileName="Assets/Scripts/PlayerData.cs" Line="8" Column="12" />
-      <File FileName="Assets/Data/playerData.csv" />
+      <File FileName="Assets/Data/Cardgame_CardList.csv" Line="8" Column="6" />
+      <File FileName="Assets/Scripts/OpenPackage.cs" Line="42" Column="37" />
+      <File FileName="Assets/Scripts/PlayerData.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Cardgame_1" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ffeb1c2e-4051-489b-84d2-b7bab063d604" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8dead477-79be-44db-92f6-607cc70d75c4" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
