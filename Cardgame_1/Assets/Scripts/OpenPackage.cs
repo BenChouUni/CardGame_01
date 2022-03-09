@@ -33,14 +33,14 @@ public class OpenPackage : MonoBehaviour
 
     public void OnclickOpen()
     {
-        /*if (playerData.playerCoin < OpenCoin)//金幣扣款
+        if (playerData.playerCoin < OpenCoin)//金幣扣款
         {
             return;
         }
         else
         {
             playerData.playerCoin -= OpenCoin;
-        }*/
+        }
 
         ClearPool();
 
@@ -52,8 +52,7 @@ public class OpenPackage : MonoBehaviour
             newCard.GetComponent<CardDisplay>().card = cardStore.RandomCard();
 
             cards.Add(newCard);
-           // string cardName = newCard.transform.GetChild(1).gameObject.GetComponent<Text>().text;
-            //Debug.Log("抽到" + cardName);//嘗試檢查抽到卡牌
+           
 
         }
         SaveCardData();//找出已經添加進cards中的卡，給她紀錄加一

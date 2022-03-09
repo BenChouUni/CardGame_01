@@ -28,6 +28,8 @@ public class CardDisplay : MonoBehaviour
 
     public void ShowCard()
     {
+        
+
         nameText.text = card.cardName;
         if (card is MonsterCard)
         {

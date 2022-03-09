@@ -1,8 +1,17 @@
-coin0
-#
-card,0,12
-card,1,10
-card,2,6
-card,3,8
-card,4,15
-card,5,10
+﻿coin ,20,
+#,ID,number
+card,0,7
+card,1,6
+card,2,5
+card,3,5
+card,4,8
+card,5,5
+,,
+,,
+#,,
+deck,0,1
+deck,1,1
+deck,2,3
+deck,3,1
+deck,4,0
+deck,5,1
