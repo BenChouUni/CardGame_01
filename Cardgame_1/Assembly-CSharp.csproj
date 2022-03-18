@@ -55,13 +55,14 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/PlayerData.cs" />
     <Compile Include="Assets/Scripts/Card.cs" />
+    <Compile Include="Assets/Scripts/DeckManager.cs" />
+    <Compile Include="Assets/Scripts/CardCounter.cs" />
     <Compile Include="Assets/Scripts/OpenPackage.cs" />
+    <Compile Include="Assets/Scripts/ClickCard.cs" />
     <Compile Include="Assets/Scripts/CardStore.cs" />
     <Compile Include="Assets/Scripts/CardDisplay.cs" />
-    <Compile Include="Assets/Scripts/CardCounter.cs" />
-    <Compile Include="Assets/Scripts/DeckManager.cs" />
     <Compile Include="Assets/Scripts/ZoomUI.cs" />
-    <Compile Include="Assets/Scripts/ClickCard.cs" />
+    <Compile Include="Assets/Scripts/BattleManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

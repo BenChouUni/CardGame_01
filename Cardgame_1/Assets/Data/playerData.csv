@@ -1,17 +1,14 @@
-﻿coin ,20,
-#,ID,number
+coin0
+#
 card,0,7
 card,1,6
 card,2,5
 card,3,5
-card,4,8
-card,5,5
-,,
-,,
-#,,
+card,4,6
+card,5,3
 deck,0,1
 deck,1,1
 deck,2,3
 deck,3,1
-deck,4,0
-deck,5,1
+deck,4,2
+deck,5,3

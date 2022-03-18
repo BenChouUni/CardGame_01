@@ -14,7 +14,7 @@ public class PlayerData : MonoBehaviour
     public TextAsset playerData;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         DataLoad();
     }
@@ -29,7 +29,7 @@ public class PlayerData : MonoBehaviour
         CardStore.LoadCardData();//先將卡牌資料庫存到CardList才能調用LoadPLayerData
         CardStore.TestLoad();
         LoadPlayerDate();
-        TestPlayerLoad();
+        //TestPlayerLoad();
     }
 
     public void LoadPlayerDate()
