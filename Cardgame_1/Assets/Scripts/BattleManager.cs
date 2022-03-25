@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;//事件
 
 public enum GamePhase
 {
     gameStart, playerDraw, playerAction, enemyDraw, enemyAction
 }
-public class BattleManager : MonoBehaviour
+public class BattleManager : MonoSingleton<BattleManager>//單例母版
 {
+    public static BattleManager Instance;
+
     public PlayerData playerData;
     public PlayerData enemyData;//資料
 
@@ -26,7 +29,13 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyIcon;//頭像
 
     public GamePhase GamePhase = GamePhase.gameStart;
-    
+
+    public UnityEvent phaseChangeEvent = new UnityEvent();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         
@@ -64,6 +73,7 @@ public class BattleManager : MonoBehaviour
         DrawCard(1, 5);
 
         GamePhase = GamePhase.playerDraw;
+        phaseChangeEvent.Invoke();
     }
 
     public void ReadDeck()//加載玩家卡組
@@ -139,6 +149,7 @@ public class BattleManager : MonoBehaviour
         {
             DrawCard(0, 1);
             GamePhase = GamePhase.playerAction;
+            phaseChangeEvent.Invoke();
         }
         
         
@@ -149,6 +160,7 @@ public class BattleManager : MonoBehaviour
         {
             DrawCard(1, 1);
             GamePhase = GamePhase.enemyAction;
+            phaseChangeEvent.Invoke();
         }
         
     }
@@ -189,10 +201,12 @@ public class BattleManager : MonoBehaviour
         if (GamePhase == GamePhase.playerAction)
         {
             GamePhase = GamePhase.enemyDraw;
+            phaseChangeEvent.Invoke();
         }
         else if (GamePhase == GamePhase.enemyAction)
         {
             GamePhase = GamePhase.playerDraw;
+            phaseChangeEvent.Invoke();
         }
     }
     
