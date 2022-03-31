@@ -11,6 +11,8 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
 {
     public static BattleManager Instance;
 
+    public Transform Canvas;
+
     public PlayerData playerData;
     public PlayerData enemyData;//資料
 
@@ -30,7 +32,17 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
 
     public GamePhase GamePhase = GamePhase.gameStart;
 
-    public UnityEvent phaseChangeEvent = new UnityEvent();
+    public UnityEvent phaseChangeEvent = new UnityEvent();//切換狀態事件
+    
+
+    public int[] SummonCountMax = new int[2]; //0 player 1 enemy
+    private int[] SummonCount = new int[2];
+
+    private GameObject waitingMonster;//暫存
+    private int waitingPlayer;
+
+    public GameObject ArrowPrefab;//箭頭
+    private GameObject arrow;
 
     private void Awake()
     {
@@ -45,7 +57,12 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButton(1))//點擊右鍵
+        {
+            DestroyArrow();
+            waitingMonster = null;
+            TurnOffSummmonBlock();
+        }
     }
 
     //遊戲流程
@@ -72,8 +89,9 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         DrawCard(0, 5);
         DrawCard(1, 5);
 
-        GamePhase = GamePhase.playerDraw;
-        phaseChangeEvent.Invoke();
+        NextPhase();
+
+        SummonCount = SummonCountMax;
     }
 
     public void ReadDeck()//加載玩家卡組
@@ -143,24 +161,22 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         Debug.Log("洗牌完成");
     }
 
-    public void OnplayerDraw()
+    public void OnplayerDraw()//外面點擊按鈕呼叫
     {
         if (GamePhase == GamePhase.playerDraw)
         {
             DrawCard(0, 1);
-            GamePhase = GamePhase.playerAction;
-            phaseChangeEvent.Invoke();
+            NextPhase();
         }
         
         
     }
-    public void OnenemyDraw()
+    public void OnenemyDraw()//外面點擊按鈕呼叫
     {
         if (GamePhase == GamePhase.enemyDraw)
         {
             DrawCard(1, 1);
-            GamePhase = GamePhase.enemyAction;
-            phaseChangeEvent.Invoke();
+            NextPhase();
         }
         
     }
@@ -185,6 +201,7 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         {
             GameObject card = Instantiate(cardPrefab, hand);
             card.GetComponent<CardDisplay>().card = drawDeck[0];//抽卡組最上面一張牌
+            card.GetComponent<BattleCard>().playerID = _player;
             drawDeck.RemoveAt(0);//並將此牌移除
         }
 
@@ -198,16 +215,115 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
 
     public void TurnEnd()
     {
-        if (GamePhase == GamePhase.playerAction)
+        if (GamePhase == GamePhase.playerAction || GamePhase == GamePhase.enemyAction)
         {
-            GamePhase = GamePhase.enemyDraw;
-            phaseChangeEvent.Invoke();
+            NextPhase();
         }
-        else if (GamePhase == GamePhase.enemyAction)
+        
+    }
+
+    public void NextPhase()//切換到下一個階段
+    {
+        if ((int)GamePhase == System.Enum.GetNames(GamePhase.GetType()).Length-1)//最後一個
         {
             GamePhase = GamePhase.playerDraw;
-            phaseChangeEvent.Invoke();
+        }
+        else
+        {
+            GamePhase += 1;
+        }
+        
+        phaseChangeEvent.Invoke();
+    }
+
+    public void SummonRequest(int _player, GameObject _monsterCard)
+    {
+        GameObject[] blocks;
+        bool hasEmptyBlock = false;
+        if (_player == 0 && GamePhase == GamePhase.playerAction)
+        {
+            blocks = playerBlock;
+        }
+        else if(_player == 1 && GamePhase == GamePhase.enemyAction)
+        {
+            blocks = enemyBlock;
+        }
+        else
+        {
+            return;
+        }
+        if (SummonCount[_player]>0)
+        {
+            foreach (var block in blocks)
+            {
+                if (block.GetComponent<Block>().card == null)//判斷格子是空的
+                {
+                    //可以做等待招喚的格子提示
+                    block.GetComponent<Block>().summonBlock.SetActive(true);
+                    hasEmptyBlock = true;
+                    
+                }
+            }
+        }
+        if (hasEmptyBlock)
+        {
+            waitingMonster = _monsterCard;
+            waitingPlayer = _player;
+            CreatArrow(_monsterCard.GetComponent<RectTransform>(),ArrowPrefab);
+        }
+        
+    }
+
+    public void SummonConfirm(Transform _block)
+    {
+        Summon(waitingPlayer,waitingMonster,_block);
+        TurnOffSummmonBlock();
+
+    }
+
+    public void TurnOffSummmonBlock()//關閉格子發亮
+    {
+        int playerBlockLength = playerBlock.Length;
+        int enemyBlockLength = enemyBlock.Length;
+        GameObject[] blocks = new GameObject[playerBlockLength + enemyBlockLength];
+        
+        for (int i = 0; i < playerBlockLength; i++)
+        {
+            blocks[i] = playerBlock[i];
+            
+        }
+        for (int i = 0; i < enemyBlockLength; i++)
+        {
+            blocks[playerBlockLength + i] = enemyBlock[i];
+            
+        }
+    
+        foreach (var block in blocks)
+        {
+            block.GetComponent<Block>().summonBlock.SetActive(false);
         }
     }
-    
+
+    public void Summon(int _player, GameObject _monsterCard, Transform _block)
+    {
+        _monsterCard.transform.SetParent(_block);
+        _monsterCard.transform.localPosition = Vector3.zero;
+        _monsterCard.GetComponent<BattleCard>().state = BattleCardState.inBlock;
+        _block.GetComponent<Block>().card = _monsterCard;
+        SummonCount[_player]--;
+        
+    }
+
+    public void CreatArrow(RectTransform _startPoint, GameObject _prefab)
+    {
+        arrow = GameObject.Instantiate(_prefab, _startPoint);
+        arrow.transform.SetParent(Canvas);
+        arrow.GetComponent<Arrow>().SetStartPoint(new Vector2(_startPoint.position.x, _startPoint.position.y));
+    }
+
+    public void DestroyArrow()
+    {
+        Destroy(arrow);
+    }
+
 }

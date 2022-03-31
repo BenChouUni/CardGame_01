@@ -65,7 +65,9 @@
     <Compile Include="Assets/Scripts/BattleManager.cs" />
     <Compile Include="Assets/Scripts/PhaseDisplay.cs" />
     <Compile Include="Assets/Scripts/MonoSingleton.cs" />
-    <Compile Include="Assets/Scripts/BattleCad.cs" />
+    <Compile Include="Assets/Scripts/BattleCard.cs" />
+    <Compile Include="Assets/Scripts/Block.cs" />
+    <Compile Include="Assets/Scripts/Arrow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
