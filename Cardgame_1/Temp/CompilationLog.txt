@@ -1,2 +1,0 @@
-# Starting compiling Assembly-CSharp.dll
-/Users/apple/Desktop/unity/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-d9bcdc10ea2ea41a993df87b88fba4b9
