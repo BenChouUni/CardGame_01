@@ -11,6 +11,7 @@ public class Arrow : MonoBehaviour
     private float ArrowLengh;
     private float ArrowAngle;
     private Vector2 ArrowPosition;
+    private Vector3 fixVector = new Vector3(960, 540,0.0f);
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,13 @@ public class Arrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         //計算變量
-        EndPoint = Input.mousePosition ; //Canvas 與 Game的座標差
+        EndPoint = Input.mousePosition - fixVector ; //Canvas 與 Game的座標差
 
         ArrowPosition = new Vector2((EndPoint.x + StartPoint.x)/2 , (EndPoint.y + StartPoint.y)/2);
-        ArrowLengh = Mathf.Sqrt(Mathf.Pow((EndPoint.x - StartPoint.x),2.0f)+ Mathf.Pow((EndPoint.y - StartPoint.y), 2.0f));
+        ArrowLengh = Mathf.Sqrt(Mathf.Pow((EndPoint.x - StartPoint.x),2.0f)+ Mathf.Pow((EndPoint.y - StartPoint.y), 2.0f)) - 35.0f;
         ArrowAngle = Mathf.Atan2(EndPoint.y-StartPoint.y, EndPoint.x-StartPoint.x);
 
         //賦值
@@ -35,6 +38,6 @@ public class Arrow : MonoBehaviour
 
     public void SetStartPoint(Vector2 _startPoint)
     {
-        StartPoint = _startPoint ;
+        StartPoint = _startPoint - new Vector2(fixVector.x,fixVector.y) ;
     }
 }

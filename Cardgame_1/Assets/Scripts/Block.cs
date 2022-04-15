@@ -7,6 +7,7 @@ public class Block : MonoBehaviour,IPointerDownHandler
 {
     public GameObject card;
     public GameObject summonBlock;
+    public GameObject AttackBlock;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -21,6 +22,7 @@ public class Block : MonoBehaviour,IPointerDownHandler
     void Start()
     {
         summonBlock.SetActive(false);
+        AttackBlock.SetActive(false);
     }
 
     // Update is called once per frame

@@ -36,13 +36,19 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
     
 
     public int[] SummonCountMax = new int[2]; //0 player 1 enemy
-    private int[] SummonCount = new int[2];
+    public int[] SummonCount = new int[2];
 
-    private GameObject waitingMonster;//暫存
+    //招喚輔助變量
+    private GameObject waitingMonster;
     private int waitingPlayer;
 
     public GameObject ArrowPrefab;//箭頭
     private GameObject arrow;
+
+    //攻擊輔助變涼
+    private GameObject attackingMonster;
+    private int attackingPlayer;
+    public GameObject attckArrow;
 
     private void Awake()
     {
@@ -61,7 +67,7 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         {
             DestroyArrow();
             waitingMonster = null;
-            TurnOffSummmonBlock();
+            TurnOffBlock();
         }
     }
 
@@ -91,7 +97,11 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
 
         NextPhase();
 
-        SummonCount = SummonCountMax;
+        for (int i = 0; i < 2; i++)//不能存指標
+        {
+            SummonCount[i] = SummonCountMax[i];
+        }
+        
     }
 
     public void ReadDeck()//加載玩家卡組
@@ -217,7 +227,21 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
     {
         if (GamePhase == GamePhase.playerAction || GamePhase == GamePhase.enemyAction)
         {
+            for (int i = 0; i < 2; i++)//重置招喚次數
+            {
+                SummonCount[i] = SummonCountMax[i];
+            }
+
+            if (GamePhase==GamePhase.playerAction)
+            {
+                ResetAttack(0);
+            }
+            else
+            {
+                ResetAttack(1);
+            }
             NextPhase();
+            
         }
         
     }
@@ -252,6 +276,7 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         {
             return;
         }
+
         if (SummonCount[_player]>0)
         {
             foreach (var block in blocks)
@@ -265,6 +290,11 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
                 }
             }
         }
+        else
+        {
+            Debug.Log("沒有招喚次數了");
+        }
+
         if (hasEmptyBlock)
         {
             waitingMonster = _monsterCard;
@@ -277,11 +307,28 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
     public void SummonConfirm(Transform _block)
     {
         Summon(waitingPlayer,waitingMonster,_block);
-        TurnOffSummmonBlock();
+        TurnOffBlock();
+        DestroyArrow();
 
     }
 
-    public void TurnOffSummmonBlock()//關閉格子發亮
+    public void Summon(int _player, GameObject _monsterCard, Transform _block)
+    {
+        _monsterCard.transform.SetParent(_block);
+        _monsterCard.transform.localPosition = Vector3.zero;
+        _monsterCard.GetComponent<BattleCard>().state = BattleCardState.inBlock;
+        _block.GetComponent<Block>().card = _monsterCard;
+
+        SummonCount[_player]-=1;
+        
+        MonsterCard mc = _monsterCard.GetComponent<CardDisplay>().card as MonsterCard;//要這樣寫才能成功獲取
+        _monsterCard.GetComponent<BattleCard>().Attackcount = mc.attackTime;
+        //招喚時要重置一次攻擊次數
+        _monsterCard.GetComponent<BattleCard>().ResetAttack();
+
+    }
+
+    public void TurnOffBlock()//關閉格子發亮
     {
         int playerBlockLength = playerBlock.Length;
         int enemyBlockLength = enemyBlock.Length;
@@ -301,19 +348,119 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         foreach (var block in blocks)
         {
             block.GetComponent<Block>().summonBlock.SetActive(false);
+            block.GetComponent<Block>().AttackBlock.SetActive(false);
         }
     }
 
-    public void Summon(int _player, GameObject _monsterCard, Transform _block)
+    public void ResetAttack(int _GamePhase)//0是玩家1是敵人
     {
-        _monsterCard.transform.SetParent(_block);
-        _monsterCard.transform.localPosition = Vector3.zero;
-        _monsterCard.GetComponent<BattleCard>().state = BattleCardState.inBlock;
-        _block.GetComponent<Block>().card = _monsterCard;
-        SummonCount[_player]--;
+        GameObject[] blocks = null;
         
+        if (_GamePhase == 0)
+        {
+            blocks = playerBlock;
+            
+        }
+        else if(_GamePhase==1)
+        {
+            blocks = enemyBlock;
+            
+        }
+        foreach (var block in blocks)
+        {
+            if (block.GetComponent<Block>().card != null)
+            {
+                block.GetComponent<Block>().card.GetComponent<BattleCard>().ResetAttack();
+
+            }
+            
+        }
+       
     }
 
+    
+
+    public void AttackRequest(int _player, GameObject _monster)
+    {
+        GameObject[] blocks;
+        bool hasMonsterBlock = false;
+        if (_player == 0 && GamePhase == GamePhase.playerAction)
+        {
+            blocks = enemyBlock;//攻擊敵方所以查看敵方格子，我方場上確定有卡牌才能呼叫此函數，所以不用再判斷
+        }
+        else if (_player == 1 && GamePhase == GamePhase.enemyAction)
+        {
+            blocks = playerBlock;
+        }
+        else
+        {
+
+            return;
+        }
+
+        foreach (var block in blocks)
+        {
+            if (block.GetComponent<Block>().card != null)//判斷格子上有怪物
+            {
+                //等待攻擊顯示
+                block.GetComponent<Block>().AttackBlock.SetActive(true);//能攻擊的格子發亮
+                //可攻擊
+                block.GetComponent<Block>().card.GetComponent<AttackTarget>().attackable = true;
+                hasMonsterBlock = true;
+                
+
+            }
+            else
+            {
+                Debug.Log("沒有攻擊目標");
+            }
+        }
+
+        if (hasMonsterBlock)
+        {
+
+            attackingMonster = _monster;
+            CreatArrow(_monster.GetComponent<RectTransform>(), attckArrow);
+        }
+    }
+    /// <summary>
+    /// 發動攻擊怪獸
+    /// </summary>
+    /// <param name="_target">攻擊目標</param>
+    public void AttackConfirm(GameObject _target)
+    {
+        Attack(attackingMonster,_target);
+        DestroyArrow();
+        TurnOffBlock();
+        //關閉所有格子可攻擊狀態
+        GameObject[] blocks = null;
+        if (GamePhase == GamePhase.playerAction)
+        {
+            blocks = enemyBlock;
+        }
+        else if(GamePhase==GamePhase.enemyAction)
+        { 
+            blocks = playerBlock;
+        }
+
+        foreach (var block in blocks)//每次攻擊完目標不再可以被攻擊，直到下一次被申請
+        {
+            if (block.GetComponent<Block>().card != null)
+            {
+                block.GetComponent<Block>().card.GetComponent<AttackTarget>().attackable = false;
+            }
+        }
+
+    }
+
+    public void Attack(GameObject _attaker, GameObject _target)
+    {
+        MonsterCard monster = _attaker.GetComponent<CardDisplay>().card as MonsterCard;
+
+        _target.GetComponent<AttackTarget>().ApplyDamage(monster.attack);
+        _attaker.GetComponent<BattleCard>().CostAttaclCount();//減少攻擊次數
+
+    }
     public void CreatArrow(RectTransform _startPoint, GameObject _prefab)
     {
         arrow = GameObject.Instantiate(_prefab, _startPoint);
@@ -324,6 +471,8 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
     public void DestroyArrow()
     {
         Destroy(arrow);
+        
     }
+
 
 }
