@@ -1,24 +1,8 @@
 ﻿<Properties StartupConfiguration="{53029B92-8E94-524D-DDBA-F2CC0F25C1B0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AttackTarget.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BattleCard.cs">
     <Files>
-      <File FileName="Assets/Scripts/CardDisplay.cs" Line="32" Column="39" IsPinned="True" />
-      <File FileName="Assets/Scripts/BattleManager.cs" Line="370" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Card.cs" Line="29" Column="24" />
-      <File FileName="Assets/Scripts/CardStore.cs" />
-      <File FileName="Assets/Data/Cardgame_CardList.csv" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/OpenPackage.cs" />
-      <File FileName="Assets/Scripts/PlayerData.cs" />
-      <File FileName="Assets/Data/playerData.csv" />
-      <File FileName="Assets/Scripts/CardCounter.cs" />
-      <File FileName="Assets/Scripts/DeckManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ZoomUI.cs" />
-      <File FileName="Assets/Scripts/ClickCard.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PhaseDisplay.cs" />
-      <File FileName="Assets/Scripts/MonoSingleton.cs" />
-      <File FileName="Assets/Scripts/Block.cs" Line="24" Column="38" />
-      <File FileName="Assets/Scripts/Arrow.cs" Line="30" Column="131" />
-      <File FileName="Assets/Scripts/BattleCard.cs" Line="33" Column="93" />
-      <File FileName="Assets/Scripts/AttackTarget.cs" Line="7" Column="11" />
+      <File FileName="Assets/Scripts/BattleCard.cs" Line="13" Column="24" />
+      <File FileName="Assets/Scripts/AttackTarget.cs" Line="23" Column="14" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">

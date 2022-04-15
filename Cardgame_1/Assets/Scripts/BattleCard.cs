@@ -40,7 +40,7 @@ public class BattleCard : MonoBehaviour, IPointerDownHandler
 
     public void ResetAttack()
     {
-        attackcount = Attackcount*1;
+        attackcount = Attackcount;
     }
 
     public void CostAttaclCount()
