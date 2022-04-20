@@ -55,7 +55,7 @@ public class CardStore : MonoBehaviour
 
                 //Debug.Log("讀取法術卡：" + spellCard.cardName);
             }
-;        }
+        }
 
     }
 

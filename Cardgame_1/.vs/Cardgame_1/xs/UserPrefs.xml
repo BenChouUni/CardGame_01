@@ -1,8 +1,24 @@
-﻿<Properties StartupConfiguration="{53029B92-8E94-524D-DDBA-F2CC0F25C1B0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BattleCard.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Data/playerData.csv">
     <Files>
-      <File FileName="Assets/Scripts/BattleCard.cs" Line="13" Column="24" />
+      <File FileName="Assets/Scripts/BattleCard.cs" Line="33" Column="19" />
       <File FileName="Assets/Scripts/AttackTarget.cs" Line="23" Column="14" />
+      <File FileName="Assets/Scripts/Arrow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MonoSingleton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerData.cs" Line="41" Column="38" />
+      <File FileName="Assets/Scripts/Card.cs" Line="15" Column="2" />
+      <File FileName="Assets/Scripts/DeckManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CardCounter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OpenPackage.cs" Line="36" Column="34" />
+      <File FileName="Assets/Scripts/ClickCard.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PhaseDisplay.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Block.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CardStore.cs" Line="28" Column="10" />
+      <File FileName="Assets/Scripts/CardDisplay.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/ZoomUI.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BattleManager.cs" Line="94" Column="9" />
+      <File FileName="Assets/Scripts/SceneManager.cs" Line="20" Column="46" />
+      <File FileName="Assets/Data/playerData.csv" Line="1" Column="7" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -12,7 +28,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="42a6673f-2f2d-4fa8-9ec4-6d7014807d46" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7dc3fae4-2dbf-4df1-bdf9-6e8d3fcfcffd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

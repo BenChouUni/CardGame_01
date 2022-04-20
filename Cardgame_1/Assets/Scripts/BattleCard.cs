@@ -25,12 +25,12 @@ public class BattleCard : MonoBehaviour, IPointerDownHandler
             if (state == BattleCardState.inHand)//必須在手牌中
             {
                 BattleManager.Instance.SummonRequest(playerID, gameObject);
-                Debug.Log("點擊" + GetComponent<CardDisplay>().card.cardName.ToString());
+                //Debug.Log("點擊" + GetComponent<CardDisplay>().card.cardName.ToString());
             }
             else if (state == BattleCardState.inBlock && attackcount > 0)//在場上時被點擊發動攻擊請求且要有攻擊次數
             {
                 BattleManager.Instance.AttackRequest(playerID,gameObject);
-                Debug.Log("點擊" + GetComponent<CardDisplay>().card.cardName.ToString() + "於場上");
+                //Debug.Log("點擊" + GetComponent<CardDisplay>().card.cardName.ToString() + "於場上");
             }
             
         }

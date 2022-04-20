@@ -82,6 +82,7 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         //洗牌
         ShuffleDeck(0);
         ShuffleDeck(1);
+        /*
         if (playerDeckList[0]!=null)
         {
             Debug.Log("玩家卡組最上面一張牌是" + playerDeckList[0].cardName);
@@ -90,7 +91,7 @@ public class BattleManager : MonoSingleton<BattleManager>//單例母版
         {
             Debug.Log("玩家卡組最上面沒牌");
         }
-            
+        */
         //雙方抽牌5
         DrawCard(0, 5);
         DrawCard(1, 5);

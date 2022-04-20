@@ -20,7 +20,7 @@ public class PlayerData : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         
     }
@@ -29,7 +29,7 @@ public class PlayerData : MonoBehaviour
         CardStore.LoadCardData();//先將卡牌資料庫存到CardList才能調用LoadPLayerData
         CardStore.TestLoad();
         LoadPlayerDate();
-        //TestPlayerLoad();
+        TestPlayerLoad();
     }
 
     public void LoadPlayerDate()
